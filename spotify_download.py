@@ -8,12 +8,38 @@ import os
 import urllib
 import youtube_dl
 
+### tries to read API keys from text file if it exists, if not asks for info and creates file in directory
+try:
+	API_file = open("API_file.txt","r")
+	spotifyUsername = API_file.readline().rstrip()
+	spotifyClientID = API_file.readline().rstrip()
+	spotifyClientSecret = API_file.readline().rstrip()
+	youtubeAPIKey = API_file.readline().rstrip()
+	API_file.close()
+	
+except(FileNotFoundError):
+	
+	print("A file with your API info was not found. Please enter in all required information.")
+	spotifyUsername = input("Enter your spotify username: ")
+	spotifyClientID = input("Enter your spotify client id: ")
+	spotifyClientSecret = input("Enter your spotify client secret: ")
+	youtubeAPIKey = input("Enter your youtube API key")
+	
+	API_file = open("API_file.txt","w")
+	API_file.write(spotifyUsername+"\n")
+	API_file.write(spotifyClientID+"\n")
+	API_file.write(spotifyClientSecret+"\n")
+	API_file.write(youtubeAPIKey + "\n")
+	API_file.close()
+	
+	
+
 #spotify token
 scope = 'user-library-read'
-username = "" #enter your spotify username
+username = spotifyUsername
 
 #enter your client id and client secrets from your spotify api
-token = util.prompt_for_user_token(username,scope,client_id = '',client_secret = '',redirect_uri = "http://localhost/")
+token = util.prompt_for_user_token(username,scope,client_id = spotifyClientID,client_secret = spotifyClientSecret,redirect_uri = "http://localhost/")
 
 def totalSongs():
     results = {}
