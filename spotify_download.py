@@ -19,11 +19,11 @@ try:
 	
 except(FileNotFoundError):
 	
-	print("A file with your API info was not found. Please enter in all required information.")
+	print("A file with your API info was not found. Please enter in all required information.\n")
 	spotifyUsername = input("Enter your spotify username: ")
 	spotifyClientID = input("Enter your spotify client id: ")
 	spotifyClientSecret = input("Enter your spotify client secret: ")
-	youtubeAPIKey = input("Enter your youtube API key")
+	youtubeAPIKey = input("Enter your youtube API key:")
 	
 	API_file = open("API_file.txt","w")
 	API_file.write(spotifyUsername+"\n")
