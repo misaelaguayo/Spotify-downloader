@@ -15,6 +15,7 @@ try:
 	spotifyClientID = API_file.readline().rstrip()
 	spotifyClientSecret = API_file.readline().rstrip()
 	youtubeAPIKey = API_file.readline().rstrip()
+	path = API_file.readline().rstrip()
 	API_file.close()
 	
 except(FileNotFoundError):
@@ -23,13 +24,15 @@ except(FileNotFoundError):
 	spotifyUsername = input("Enter your spotify username: ")
 	spotifyClientID = input("Enter your spotify client id: ")
 	spotifyClientSecret = input("Enter your spotify client secret: ")
-	youtubeAPIKey = input("Enter your youtube API key:")
+	youtubeAPIKey = input("Enter your youtube API key: ")
+	path = input("Enter a path for songs to be downloaded into: ")
 	
 	API_file = open("API_file.txt","w")
 	API_file.write(spotifyUsername+"\n")
 	API_file.write(spotifyClientID+"\n")
 	API_file.write(spotifyClientSecret+"\n")
 	API_file.write(youtubeAPIKey + "\n")
+	API_file.write(path + "\n")
 	API_file.close()
 	
 	
