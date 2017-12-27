@@ -70,7 +70,7 @@ else:
     print ("Can't get token for", username)
 
 #enter your youtube API_KEY 	
-API_KEY = ""
+API_KEY = youtubeAPIKey
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
@@ -98,7 +98,7 @@ def search_by_keyword(track):
 
 #changes the current working directory so that songs are downloaded into the songs folder
 #Temporary directory solution found at: https://pastebin.com/HPBK05Uf
-os.chdir(r"Path Name") #enter your path name for song folder
+os.chdir(path) #enter your path name for song folder
 
 #use download_archive in ydl_opts to prevent multiple downloads
 
