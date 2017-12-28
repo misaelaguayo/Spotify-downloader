@@ -97,14 +97,10 @@ def search_by_keyword(track): #returns a youtube ID of type string for one song
 	return videos
 
 
-#changes the current working directory so that songs are downloaded into the songs folder
-#Temporary directory solution found at: https://pastebin.com/HPBK05Uf
-os.chdir(path) #enter your path name for song folder
-
 #use download_archive in ydl_opts to prevent multiple downloads
 
-
 ydl_opts = {
+    'outtmpl': path + '/%(title)s.%(ext)s',
     'format': 'bestaudio/best',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
