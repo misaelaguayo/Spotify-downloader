@@ -65,6 +65,7 @@ def totalSongs():
 if token:
     sp = spotipy.Spotify(auth=token)
     SongList = totalSongs()
+    print("Song List ready")
     
 else:
     print ("Can't get token for", username)
@@ -74,7 +75,7 @@ API_KEY = youtubeAPIKey
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
-def search_by_keyword(track):
+def search_by_keyword(track): #returns a youtube ID of type string for one song
 	youtube = build(
 		YOUTUBE_API_SERVICE_NAME, 
 		YOUTUBE_API_VERSION, 
@@ -86,11 +87,11 @@ def search_by_keyword(track):
 		maxResults=1
     ).execute()
 
-	videos = []
+	videos = ""
 
 	for search_result in search_response.get("items", []):
 		if search_result["id"]["kind"] == "youtube#video":
-			videos.append("%s" % (search_result["id"]["videoId"]))
+			videos ="%s" % (search_result["id"]["videoId"])
 			
 
 	return videos
@@ -102,6 +103,7 @@ os.chdir(path) #enter your path name for song folder
 
 #use download_archive in ydl_opts to prevent multiple downloads
 
+
 ydl_opts = {
     'format': 'bestaudio/best',
     'postprocessors': [{
@@ -111,19 +113,25 @@ ydl_opts = {
     }],
 }
 
+
+def downloadList(SongList):
+        youtubeLinks = []
+        if SongList:
+                for song in SongList:
+                        youtubeLinks.append("https://www.youtube.com/watch?v=" + search_by_keyword(song))
+        return youtubeLinks
+
+
+
 if __name__ == "__main__":
     if SongList:
-        for track in SongList:  #for each track in the songlist
-            try:
-                vids = search_by_keyword(track) #gets the youtube id of a song
-                for enum in vids:
-                    print(enum)
-                    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                        ydl.download(['https://www.youtube.com/watch?v=' + enum])
-            except (KeyboardInterrupt):
+        youtubeLinks = downloadList(SongList[0:10]) #list of youtube links, this one only downloads 10 songs
+        try:
+                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                        ydl.download(youtubeLinks)
+        except(KeyboardInterrupt):
                 print("Program interrupted manually")
                 sys.exit()
-            except (HttpError):
-                print("An HTTP error occured: ")
+        except (HttpError):
+                print("An HTTP error occurred: ")
                 sys.exit()
-				
