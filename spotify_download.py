@@ -101,6 +101,7 @@ def search_by_keyword(track): #returns a youtube ID of type string for one song
 
 ydl_opts = {
     'outtmpl': path + '/%(title)s.%(ext)s',
+    'download_archive' : 'downloaded_songs.txt',
     'format': 'bestaudio/best',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
